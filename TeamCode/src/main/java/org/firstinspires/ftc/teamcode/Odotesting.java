@@ -47,7 +47,6 @@ public class Odotesting extends LinearOpMode {
     private HolonomicOdometry odometry;
 
     private FtcDashboard dashboard;
-    private DashboardCore dashboardnew;
 
     @Override
     public void runOpMode() throws InterruptedException {
@@ -81,7 +80,11 @@ public class Odotesting extends LinearOpMode {
         while (opModeIsActive() && !isStopRequested()) {
             // control loop
 
+
             odometry.updatePose(); // update the position
+
+            telemetry.addData("Pose:", odometry.getPose());
+            telemetry.update();
 
         }
     }

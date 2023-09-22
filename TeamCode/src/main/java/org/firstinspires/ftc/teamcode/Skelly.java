@@ -1,6 +1,11 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.acmerobotics.dashboard.FtcDashboard;
+import static org.firstinspires.ftc.teamcode.configVar.kA;
+import static org.firstinspires.ftc.teamcode.configVar.kG;
+import static org.firstinspires.ftc.teamcode.configVar.kS;
+import static org.firstinspires.ftc.teamcode.configVar.kV;
+
+import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -18,7 +23,8 @@ import java.util.List;
 @TeleOp
 @Disabled
 public class Skelly extends LinearOpMode {
-
+    public MotorEx rightFront, leftFront, rightBack, leftBack, leftLiftMotor, rightLiftMotor;
+    public GamepadEx driver, operator;
 
     public static final int DriverTolerance = 5;
 
@@ -30,23 +36,30 @@ public class Skelly extends LinearOpMode {
     public AprilTagProcessor aprilTag;
     public TfodProcessor tfod;
 
+    public ElevatorFeedforward elevatorFeedforward;
+
     @Override
     public void runOpMode() {
-        FtcDashboard dashboard = FtcDashboard.getInstance();
-        MotorEx rightFront, leftFront, rightBack, leftBack;
-        GamepadEx driver = new GamepadEx(gamepad1);
-        GamepadEx operator = new GamepadEx(gamepad2);
+        elevatorFeedforward = new ElevatorFeedforward(
+                kS, kG, kV, kA
+        );
 
+        driver = new GamepadEx(gamepad1);
+        operator = new GamepadEx(gamepad2);
 
         rightFront = new MotorEx(hardwareMap, "Right Front Motor");
         leftFront = new MotorEx(hardwareMap, "Left Front Motor");
         rightBack = new MotorEx(hardwareMap, "Right Back Motor");
         leftBack = new MotorEx(hardwareMap, "Left Back Motor");
+        leftLiftMotor = new MotorEx(hardwareMap, "Left Lift Motor");
+        rightLiftMotor = new MotorEx(hardwareMap, "Right Lift Motor");
 
         rightFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         rightBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         leftBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        leftLiftMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        rightLiftMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
 
         rightFront.resetEncoder();
         leftFront.resetEncoder();
@@ -129,5 +142,18 @@ public class Skelly extends LinearOpMode {
         visionPortal.setProcessorEnabled(aprilTag, true);
 
     }   // end method initAprilTag()
+
+    public void elevatorRunToSet3() {
+        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+    }
+    public void elevatorRunToSet2() {
+        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+    }
+    public void elevatorRunToSet1() {
+        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
+    }
 
 }
