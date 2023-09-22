@@ -87,6 +87,7 @@ public class Skelly extends LinearOpMode {
     * */
     public void initVision() {
 
+
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
                 .setDrawAxes(true)

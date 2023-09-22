@@ -6,6 +6,10 @@ import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
+import java.util.List;
+
 @Config
 class configVar extends Skelly {
 
@@ -15,6 +19,9 @@ class configVar extends Skelly {
     public static volatile int elevatorKA = 0;
 
     public static volatile int intakeVel = 50;
+
+    public static int cameraCenter = 620;
+    public static int apriltagtollerence = 5;
 }
 
 @TeleOp(name = "BasicTeleOp", group = "Pain (Basic)")
@@ -25,7 +32,17 @@ public class BasicOpMode extends configVar {
 
         waitForStart();
 
+        initVision();
+
         if (opModeIsActive()) {
+            int aprilTagLeftId = 1;
+            int aprilTagMiddleId = 2;
+            int aprilTagRightId = 3;
+
+            double aprilTagLeftCenterX = 0;
+            double aprilTagMiddleCenterX = 0;
+            double aprilTagRightCenterX = 0;
+
             while (opModeIsActive()) {
 
                 double rx = driver.getRightX();
@@ -45,6 +62,39 @@ public class BasicOpMode extends configVar {
                     rightBack.setVelocity(backRightPower, DEGREES);
 
                 }
+
+                List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
+                if (!aprilTagDetections.isEmpty()){
+                    for (AprilTagDetection detection : aprilTagDetections) {
+                        if (detection.id == aprilTagLeftId){
+                            aprilTagLeftCenterX = detection.center.x;
+                        } else if (detection.id == aprilTagMiddleId) {
+                            aprilTagMiddleCenterX = detection.center.x;
+                        } else if (detection.id == aprilTagRightId) {
+                            aprilTagRightCenterX = detection.center.x;
+                        }
+                    }
+                }
+
+                if (driver.isDown(GamepadKeys.Button.DPAD_LEFT)) {
+                    while (Math.abs(aprilTagLeftCenterX - cameraCenter) > apriltagtollerence) {
+                        break;
+                    }
+                }
+
+                if (driver.isDown(GamepadKeys.Button.DPAD_UP)) {
+                    while (Math.abs(aprilTagMiddleCenterX - cameraCenter) > apriltagtollerence) {
+                        break;
+                    }
+                }
+
+                if (driver.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
+                    while (Math.abs(aprilTagRightCenterX - cameraCenter) > apriltagtollerence) {
+                        break;
+                    }
+                }
+
+
 
 
                 if (operator.isDown(GamepadKeys.Button.A)) {
