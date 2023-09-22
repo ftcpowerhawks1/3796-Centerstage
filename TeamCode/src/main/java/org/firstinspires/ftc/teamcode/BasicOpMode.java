@@ -3,8 +3,12 @@ package org.firstinspires.ftc.teamcode;
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 
 import com.acmerobotics.dashboard.config.Config;
+import com.arcrobotics.ftclib.command.button.Button;
+import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.Servo;
 
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
@@ -42,6 +46,27 @@ public class BasicOpMode extends configVar {
             double aprilTagLeftCenterX = 0;
             double aprilTagMiddleCenterX = 0;
             double aprilTagRightCenterX = 0;
+
+            Button setline3 = new GamepadButton(
+                    operator, GamepadKeys.Button.A
+            );
+            Button setline2 = new GamepadButton(
+                    operator, GamepadKeys.Button.A
+            );
+            Button setline1 = new GamepadButton(
+                    operator, GamepadKeys.Button.A
+            );
+
+            Button autoalignleft = new GamepadButton(
+                    driver, GamepadKeys.Button.A
+            );
+            Button autoalignmiddle = new GamepadButton(
+                    driver, GamepadKeys.Button.A
+            );
+            Button autoalignright = new GamepadButton(
+                    driver, GamepadKeys.Button.A
+            );
+
 
             while (opModeIsActive()) {
 
@@ -94,27 +119,8 @@ public class BasicOpMode extends configVar {
                     }
                 }
 
-
-
-
-                if (operator.isDown(GamepadKeys.Button.A)) {
-                    elevatorRunToSet3();
-                }
-
-                if (operator.isDown(GamepadKeys.Button.B)) {
-                    elevatorRunToSet2();
-                }
-
-                if (operator.isDown(GamepadKeys.Button.Y)) {
-                    elevatorRunToSet1();
-                }
-
-
-                if (intake.getState()) {
-                    intakeMotor.setVelocity(intakeVel, DEGREES);
-                } else {
-                    intakeMotor.setVelocity(0, DEGREES);
-                }
+                //TODO Implement FTCLib Subsystems
+                setline1.whenPressed(intakesubsystem::spinintake);
 
 
 

@@ -59,7 +59,6 @@ public class Skelly extends LinearOpMode {
         leftLiftMotor = new MotorEx(hardwareMap, "Left Lift Motor");
         rightLiftMotor = new MotorEx(hardwareMap, "Right Lift Motor");
 
-        intakeMotor = new MotorEx(hardwareMap, "Intake Motor");
 
         rightFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
         leftFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
