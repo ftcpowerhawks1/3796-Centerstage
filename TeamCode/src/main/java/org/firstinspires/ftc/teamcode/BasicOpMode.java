@@ -1,16 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
+
 import com.acmerobotics.dashboard.config.Config;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-
 @Config
 class configVar extends Skelly {
-    public static volatile int kS = 0;
-    public static volatile int kG = 0;
-    public static volatile int kV = 0;
-    public static volatile int kA = 0;
+
+    public static volatile int elevatorKS = 0;
+    public static volatile int elevatorKG = 0;
+    public static volatile int elevatorKV = 0;
+    public static volatile int elevatorKA = 0;
+
+    public static volatile int intakeVel = 50;
 }
 
 @TeleOp(name = "BasicTeleOp", group = "Pain (Basic)")
@@ -35,24 +39,31 @@ public class BasicOpMode extends configVar {
                     double frontRightPower = (rx - x - y) / denominator;
                     double backRightPower = (rx + x - y) / denominator;
 
-                    leftFront.setVelocity(frontLeftPower);
-                    leftBack.setVelocity(backLeftPower);
-                    rightFront.setVelocity(frontRightPower);
-                    rightBack.setVelocity(backRightPower);
+                    leftFront.setVelocity(frontLeftPower, DEGREES);
+                    leftBack.setVelocity(backLeftPower, DEGREES);
+                    rightFront.setVelocity(frontRightPower, DEGREES);
+                    rightBack.setVelocity(backRightPower, DEGREES);
 
                 }
 
 
-                if (operator.wasJustPressed(GamepadKeys.Button.A)); {
+                if (operator.isDown(GamepadKeys.Button.A)) {
                     elevatorRunToSet3();
                 }
 
-                if (operator.wasJustPressed(GamepadKeys.Button.B)); {
+                if (operator.isDown(GamepadKeys.Button.B)) {
                     elevatorRunToSet2();
                 }
 
-                if (operator.wasJustPressed(GamepadKeys.Button.X)); {
+                if (operator.isDown(GamepadKeys.Button.Y)) {
                     elevatorRunToSet1();
+                }
+
+
+                if (intake.getState()) {
+                    intakeMotor.setVelocity(intakeVel, DEGREES);
+                } else {
+                    intakeMotor.setVelocity(0, DEGREES);
                 }
 
 
