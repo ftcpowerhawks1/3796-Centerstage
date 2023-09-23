@@ -7,6 +7,10 @@ import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import org.firstinspires.ftc.teamcode.subsystem.Elevator;
+import org.firstinspires.ftc.teamcode.subsystem.Intake;
+
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 
@@ -14,23 +18,9 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
 
 import java.util.List;
 
-@Config
-class configVar extends Skelly {
-
-    public static volatile int elevatorKS = 0;
-    public static volatile int elevatorKG = 0;
-    public static volatile int elevatorKV = 0;
-    public static volatile int elevatorKA = 0;
-
-    public static volatile int intakeVel = 50;
-
-    public static int cameraCenter = 620;
-    public static int apriltagtollerence = 5;
-}
-
 @TeleOp(name = "BasicTeleOp", group = "Pain (Basic)")
 public class BasicOpMode extends configVar {
-
+    protected Intake intake;
     @Override
     public void runOpMode() {
 
@@ -47,32 +37,18 @@ public class BasicOpMode extends configVar {
             double aprilTagMiddleCenterX = 0;
             double aprilTagRightCenterX = 0;
 
-            Button setline3 = new GamepadButton(
-                    operator, GamepadKeys.Button.A
-            );
-            Button setline2 = new GamepadButton(
-                    operator, GamepadKeys.Button.A
-            );
-            Button setline1 = new GamepadButton(
-                    operator, GamepadKeys.Button.A
-            );
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(intake::intake);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet1);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet2);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet3);
 
-            Button autoalignleft = new GamepadButton(
-                    driver, GamepadKeys.Button.A
-            );
-            Button autoalignmiddle = new GamepadButton(
-                    driver, GamepadKeys.Button.A
-            );
-            Button autoalignright = new GamepadButton(
-                    driver, GamepadKeys.Button.A
-            );
 
 
             while (opModeIsActive()) {
 
-                double rx = driver.getRightX();
-                double x = driver.getLeftX() * 1.1; // Counteract imperfect strafing
-                double y = driver.getLeftY();
+                double rx = primaryGamePad.getRightX();
+                double x = primaryGamePad.getLeftX() * 1.1; // Counteract imperfect strafing
+                double y = primaryGamePad.getLeftY();
 
                 if (rx > DriverTolerance || x > DriverTolerance || y > DriverTolerance) {
                     double denominator = Math.max(Math.abs(rx) + Math.abs(x) + Math.abs(y), 1);
@@ -100,28 +76,6 @@ public class BasicOpMode extends configVar {
                         }
                     }
                 }
-
-                if (driver.isDown(GamepadKeys.Button.DPAD_LEFT)) {
-                    while (Math.abs(aprilTagLeftCenterX - cameraCenter) > apriltagtollerence) {
-                        break;
-                    }
-                }
-
-                if (driver.isDown(GamepadKeys.Button.DPAD_UP)) {
-                    while (Math.abs(aprilTagMiddleCenterX - cameraCenter) > apriltagtollerence) {
-                        break;
-                    }
-                }
-
-                if (driver.isDown(GamepadKeys.Button.DPAD_RIGHT)) {
-                    while (Math.abs(aprilTagRightCenterX - cameraCenter) > apriltagtollerence) {
-                        break;
-                    }
-                }
-
-                //TODO Implement FTCLib Subsystems
-                setline1.whenPressed(intakesubsystem::spinintake);
-
 
 
 

@@ -1,11 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKA;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKG;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKS;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKV;
-
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
@@ -15,6 +9,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
+import org.firstinspires.ftc.teamcode.subsystem.Elevator;
+import org.firstinspires.ftc.teamcode.subsystem.Intake;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
@@ -25,59 +21,52 @@ import java.util.List;
 @TeleOp
 @Disabled
 public class Skelly extends LinearOpMode {
-    public MotorEx rightFront, leftFront, rightBack, leftBack, leftLiftMotor, rightLiftMotor, intakeMotor;
-    public GamepadEx driver, operator;
-
-    public static final int DriverTolerance = 5;
-
+    //Vision Items
     public static final String TFOD_MODEL_FILE = "model.tflite";
-
     public List<String> labels = new ArrayList<>();
-
     public VisionPortal visionPortal;
     public AprilTagProcessor aprilTag;
     public TfodProcessor tfod;
 
-    public ElevatorFeedforward elevatorFeedforward;
+    //Drive Init
+    public int DriverTolerance = 5;
 
-    public ToggleButtonReader intake = new ToggleButtonReader(operator, GamepadKeys.Button.RIGHT_BUMPER);
+    //Gamepads
+    public GamepadEx primaryGamePad = new GamepadEx(gamepad1);
+    public GamepadEx secondaryGamePad = new GamepadEx(gamepad2);
+
+    //Motors
+    MotorEx leftFront, leftBack, rightFront, rightBack;
+
+    //Toggle Buttons
+    public ToggleButtonReader intaketoggle = new ToggleButtonReader(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER);
+
+    //Subsystem Init
+    protected Intake intake;
+    protected Elevator elevator;
+
+    protected void initHardware(boolean isAuto) {
+        //Subsystem inti
+        intake = new Intake(hardwareMap);
+        elevator = new Elevator(hardwareMap);
+
+        intake.register();
+        elevator.register();
+
+        //Motor Init
+        leftFront = hardwareMap.get(MotorEx.class, "Left Front");
+        leftBack = hardwareMap.get(MotorEx.class, "Left Back");
+        rightFront = hardwareMap.get(MotorEx.class, "Right Front");
+        rightBack = hardwareMap.get(MotorEx.class, "Right Back");
+
+
+    }
 
     @Override
     public void runOpMode() {
-        elevatorFeedforward = new ElevatorFeedforward(
-                elevatorKS, elevatorKG, elevatorKV, elevatorKA
-        );
-
-        driver = new GamepadEx(gamepad1);
-        operator = new GamepadEx(gamepad2);
-
-        rightFront = new MotorEx(hardwareMap, "Right Front Motor");
-        leftFront = new MotorEx(hardwareMap, "Left Front Motor");
-        rightBack = new MotorEx(hardwareMap, "Right Back Motor");
-        leftBack = new MotorEx(hardwareMap, "Left Back Motor");
-
-        leftLiftMotor = new MotorEx(hardwareMap, "Left Lift Motor");
-        rightLiftMotor = new MotorEx(hardwareMap, "Right Lift Motor");
 
 
-        rightFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        leftFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
 
-        leftLiftMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-        rightLiftMotor.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
-
-        rightFront.resetEncoder();
-        leftFront.resetEncoder();
-        rightBack.resetEncoder();
-        leftBack.resetEncoder();
-
-        leftLiftMotor.resetEncoder();
-        rightLiftMotor.resetEncoder();
-
-        labels.add("Cone");
-        labels.add("No Cone");
 
     }
 
@@ -86,6 +75,8 @@ public class Skelly extends LinearOpMode {
     * */
     public void initVision() {
 
+        labels.add("Cone");
+        labels.add("No Cone");
 
         // Create the AprilTag processor.
         aprilTag = new AprilTagProcessor.Builder()
@@ -151,18 +142,5 @@ public class Skelly extends LinearOpMode {
         visionPortal.setProcessorEnabled(aprilTag, true);
 
     }   // end method initAprilTag()
-
-    public void elevatorRunToSet3() {
-        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-    }
-    public void elevatorRunToSet2() {
-        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-    }
-    public void elevatorRunToSet1() {
-        leftLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-        rightLiftMotor.setVelocity(elevatorFeedforward.calculate(10, 20));
-    }
 
 }
