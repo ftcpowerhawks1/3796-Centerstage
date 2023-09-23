@@ -2,31 +2,41 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 
-import com.acmerobotics.dashboard.config.Config;
-import com.arcrobotics.ftclib.command.button.Button;
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.subsystem.Elevator;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
+import org.firstinspires.ftc.teamcode.subsystem.Vision;
 
-import com.qualcomm.robotcore.hardware.HardwareMap;
-import com.qualcomm.robotcore.hardware.Servo;
-
+import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp(name = "BasicTeleOp", group = "Pain (Basic)")
 public class BasicOpMode extends configVar {
     protected Intake intake;
+    protected Vision vision;
+    public List<String> labels = new ArrayList<>();
+    public VisionPortal visionPortal;
+    public AprilTagProcessor aprilTag;
+    public TfodProcessor tfod;
+
     @Override
     public void runOpMode() {
 
         waitForStart();
 
-        initVision();
+        intake = new Intake(hardwareMap);
+        intake.register();
+        vision = new Vision(hardwareMap);
+        vision.register();
+
+        vision.initVision();
 
         if (opModeIsActive()) {
             int aprilTagLeftId = 1;
@@ -41,6 +51,7 @@ public class BasicOpMode extends configVar {
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet1);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet2);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet3);
+
 
 
 

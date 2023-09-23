@@ -6,13 +6,23 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
+import org.firstinspires.ftc.teamcode.subsystem.Vision;
+import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
+import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @TeleOp(name = "Double Vision", group = "Pain (Beta)")
 
 public class DoubleVision extends Skelly {
+    public static final String TFOD_MODEL_FILE = "model.tflite";
+    public List<String> labels = new ArrayList<>();
+    public VisionPortal visionPortal;
+    public AprilTagProcessor aprilTag;
+    public TfodProcessor tfod;
 
     //Initialize Required Variables for AprilTag
     int aprilTagLeftId = 1;
@@ -28,12 +38,11 @@ public class DoubleVision extends Skelly {
     @Override
     public void runOpMode() {
 
-        initVision();
-
-
         telemetry.addData(">", "Hope And Pray That it works");
 
         telemetry.update();
+        vision.initVision();
+
         waitForStart();
 
         if (opModeIsActive()) {

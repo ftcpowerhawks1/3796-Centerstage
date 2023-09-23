@@ -5,9 +5,13 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.teamcode.Skelly;
+import org.firstinspires.ftc.teamcode.subsystem.Vision;
 import org.firstinspires.ftc.vision.VisionPortal;
+import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
+import org.firstinspires.ftc.teamcode.subsystem.Vision.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -23,6 +27,9 @@ public class ConceptTensorFlowObjectDetection extends Skelly {
      * The variable to store our instance of the vision portal.
      */
     private VisionPortal visionPortal;
+
+    public List<String> labels = new ArrayList<>();
+    public AprilTagProcessor aprilTag;
 
     @Override
     public void runOpMode() {
@@ -64,7 +71,7 @@ public class ConceptTensorFlowObjectDetection extends Skelly {
             // Use setModelAssetName() if the TF Model is built in as an asset.
             // Use setModelFileName() if you have downloaded a custom team model to the Robot Controller.
             //.setModelAssetName(TFOD_MODEL_ASSET)
-            .setModelFileName(TFOD_MODEL_FILE)
+            .setModelFileName(Vision.TFOD_MODEL_FILE)
 
             .setModelLabels(labels)
             //.setIsModelTensorFlow2(true)
