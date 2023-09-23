@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
+import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -56,6 +57,23 @@ public class Skelly extends LinearOpMode {
         leftBack = hardwareMap.get(MotorEx.class, "Left Back");
         rightFront = hardwareMap.get(MotorEx.class, "Right Front");
         rightBack = hardwareMap.get(MotorEx.class, "Right Back");
+
+        leftFront.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+
+        if (isAuto) {
+            leftFront.setRunMode(MotorEx.RunMode.RawPower);
+            leftBack.setRunMode(MotorEx.RunMode.RawPower);
+            rightFront.setRunMode(MotorEx.RunMode.RawPower);
+            rightBack.setRunMode(MotorEx.RunMode.RawPower);
+        } else {
+            leftFront.setRunMode(MotorEx.RunMode.VelocityControl);
+            leftBack.setRunMode(MotorEx.RunMode.VelocityControl);
+            rightFront.setRunMode(MotorEx.RunMode.VelocityControl);
+            rightBack.setRunMode(MotorEx.RunMode.VelocityControl);
+        }
 
 
     }

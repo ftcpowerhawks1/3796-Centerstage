@@ -43,9 +43,12 @@ public class BasicOpMode extends configVar {
             double aprilTagRightCenterX = 0;
 
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(intake::intake);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet1);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet2);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(elevator::elevatorRunToSet3);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.LEFT_BUMPER).whenPressed(intake::intakelow);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intake::intakehigh);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.X).whenPressed(elevator::elevatorRunToSet1);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.Y).whenPressed(elevator::elevatorRunToSet2);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.B).whenPressed(elevator::elevatorRunToSet3);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatordown);
 
 
 

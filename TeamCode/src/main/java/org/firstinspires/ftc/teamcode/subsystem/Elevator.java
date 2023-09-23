@@ -50,6 +50,11 @@ public class Elevator extends SubsystemBase {
         Elevatorrightmotor.setVelocity(feedforward.calculate(10, 20));
     }
 
+    public void elevatordown() {
+        Elevatorleftmotor.setVelocity(feedforward.calculate(-10, 20));
+        Elevatorrightmotor.setVelocity(feedforward.calculate(-10, 20));
+    }
+
     public void stop() {
         setVel(0.0);
     }
