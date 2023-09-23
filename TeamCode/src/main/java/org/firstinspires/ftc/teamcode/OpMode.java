@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGR
 
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -25,6 +26,7 @@ public class OpMode extends configVar {
     public VisionPortal visionPortal;
     public AprilTagProcessor aprilTag;
     public TfodProcessor tfod;
+    public ToggleButtonReader intakeToggle = new ToggleButtonReader(secondaryGamePad, GamepadKeys.Button.A);
 
     @Override
     public void runOpMode() {
@@ -42,7 +44,7 @@ public class OpMode extends configVar {
             double aprilTagMiddleCenterX = 0;
             double aprilTagRightCenterX = 0;
 
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.A).whenPressed(intake::intake);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_UP).whenPressed(intake::stop);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.LEFT_BUMPER).whenPressed(intake::intakelow);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intake::intakehigh);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.X).whenPressed(elevator::elevatorRunToSet1);
@@ -74,6 +76,14 @@ public class OpMode extends configVar {
 
                 }
 
+                if (intakeToggle.stateJustChanged()) {
+                    if (intakeToggle.getState()) {
+                        intake.intake();
+                    } else {
+                        intake.outtake();
+                    }
+                }
+
                 //April Tag Stuff
                 List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
                 if (!aprilTagDetections.isEmpty()){
@@ -93,6 +103,12 @@ public class OpMode extends configVar {
                 telemetry.update();
                 sleep(20);
             }
+        if (isStopRequested()) {
+            intake.stop();
+            elevator.stop();
+
+            stop();
+        }
         }
     }
 }

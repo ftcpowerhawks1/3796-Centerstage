@@ -35,7 +35,6 @@ public class Skelly extends LinearOpMode {
     MotorEx leftFront, leftBack, rightFront, rightBack;
 
     //Toggle Buttons
-    public ToggleButtonReader intaketoggle = new ToggleButtonReader(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER);
 
     //Subsystem Init
     protected Intake intake;
@@ -58,10 +57,10 @@ public class Skelly extends LinearOpMode {
         rightFront = hardwareMap.get(MotorEx.class, "Right Front");
         rightBack = hardwareMap.get(MotorEx.class, "Right Back");
 
-        leftFront.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        leftBack.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        rightFront.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
-        rightBack.setZeroPowerBehavior(Motor.ZeroPowerBehavior.BRAKE);
+        leftFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        leftBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        rightFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
+        rightBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.BRAKE);
 
         if (isAuto) {
             leftFront.setRunMode(MotorEx.RunMode.RawPower);
@@ -76,10 +75,26 @@ public class Skelly extends LinearOpMode {
         }
 
 
+
     }
 
     @Override
     public void runOpMode() {
 
+    }
+
+    public void stoprobot() {
+        intake.stop();
+        elevator.stop();
+
+        leftFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+        leftBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+        rightFront.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+        rightBack.setZeroPowerBehavior(MotorEx.ZeroPowerBehavior.FLOAT);
+
+        leftFront.stopMotor();
+        leftBack.stopMotor();
+        rightFront.stopMotor();
+        rightBack.stopMotor();
     }
 }
