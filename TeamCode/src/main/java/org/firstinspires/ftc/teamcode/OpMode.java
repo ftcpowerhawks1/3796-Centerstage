@@ -17,8 +17,8 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.ArrayList;
 import java.util.List;
 
-@TeleOp(name = "BasicTeleOp", group = "Pain (Basic)")
-public class BasicOpMode extends configVar {
+@TeleOp(name = "TeleOp", group = "Pain (Basic)")
+public class OpMode extends configVar {
     protected Intake intake;
     protected Vision vision;
     public List<String> labels = new ArrayList<>();
