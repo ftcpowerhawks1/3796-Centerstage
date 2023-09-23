@@ -1,13 +1,6 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKA;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKG;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKS;
-import static org.firstinspires.ftc.teamcode.configVar.elevatorKV;
-
 import com.arcrobotics.ftclib.command.SubsystemBase;
-import com.arcrobotics.ftclib.controller.wpilibcontroller.ElevatorFeedforward;
-import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
@@ -40,6 +33,10 @@ public class Vision extends SubsystemBase {
     public void periodic() {
 
     }
+
+    /**
+     * Initialize AprilTag and Tensorflow.
+     * */
 
     public void initVision() {
 

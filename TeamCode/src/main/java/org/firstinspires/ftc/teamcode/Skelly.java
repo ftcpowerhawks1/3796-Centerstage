@@ -22,7 +22,6 @@ import java.util.List;
 @TeleOp
 @Disabled
 public class Skelly extends LinearOpMode {
-    //Vision Items
 
     //Drive Init
     public int DriverTolerance = 5;
@@ -64,14 +63,5 @@ public class Skelly extends LinearOpMode {
     @Override
     public void runOpMode() {
 
-
-
-
     }
-
-    /**
-    * Initialize AprilTag and Tensorflow.
-    * */
-
-
 }

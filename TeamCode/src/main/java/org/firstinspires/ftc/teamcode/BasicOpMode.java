@@ -31,12 +31,7 @@ public class BasicOpMode extends configVar {
 
         waitForStart();
 
-        intake = new Intake(hardwareMap);
-        intake.register();
-        vision = new Vision(hardwareMap);
-        vision.register();
-
-        vision.initVision();
+        initHardware(false);
 
         if (opModeIsActive()) {
             int aprilTagLeftId = 1;
@@ -57,6 +52,7 @@ public class BasicOpMode extends configVar {
 
             while (opModeIsActive()) {
 
+                /* Custom Mecaunum Drive Code */
                 double rx = primaryGamePad.getRightX();
                 double x = primaryGamePad.getLeftX() * 1.1; // Counteract imperfect strafing
                 double y = primaryGamePad.getLeftY();
@@ -75,6 +71,7 @@ public class BasicOpMode extends configVar {
 
                 }
 
+                //April Tag Stuff
                 List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
                 if (!aprilTagDetections.isEmpty()){
                     for (AprilTagDetection detection : aprilTagDetections) {

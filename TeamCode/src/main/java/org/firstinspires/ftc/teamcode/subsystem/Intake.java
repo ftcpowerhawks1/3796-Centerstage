@@ -1,8 +1,9 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
+import static org.firstinspires.ftc.teamcode.configVar.intakereversed;
+
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Intake extends SubsystemBase {
@@ -15,7 +16,8 @@ public class Intake extends SubsystemBase {
         this.hardwareMap = hardwareMap;
 
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-        intakeMotor.setDirection(DcMotorSimple.Direction.REVERSE);
+
+
     }
 
     @Override
@@ -29,11 +31,19 @@ public class Intake extends SubsystemBase {
     }
 
     public void intake() {
-        setPower(1.0);
+        if (intakereversed) {
+            setPower(1.0);
+        } else {
+            setPower(-1.0);
+        }
     }
 
     public void outtake() {
-        setPower(-1.0);
+        if (intakereversed) {
+            setPower(-1.0);
+        } else {
+            setPower(1.0);
+        }
     }
 
     public void stop() {
