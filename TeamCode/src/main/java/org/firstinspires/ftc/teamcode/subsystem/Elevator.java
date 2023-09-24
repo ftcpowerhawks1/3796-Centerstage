@@ -47,26 +47,26 @@ public class Elevator extends SubsystemBase {
     }
 
     public void elevatorRunToSet3() {
-        while (5 != Elevatorleftmotor.getCurrentPosition() - 100) {
+        while (5 < Math.abs(Elevatorleftmotor.getCurrentPosition() - 100)) {
             Elevatorleftmotor.setPower(gotopos(100, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(100, Elevatorrightmotor.getCurrentPosition()));
         }
     }
     public void elevatorRunToSet2() {
-        while (5 != Elevatorleftmotor.getCurrentPosition() - 50) {
+        while (5 < Math.abs(Elevatorleftmotor.getCurrentPosition() - 50)) {
             Elevatorleftmotor.setPower(gotopos(50, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(50, Elevatorrightmotor.getCurrentPosition()));
         }
     }
     public void elevatorRunToSet1() {
-        while (5 != Elevatorleftmotor.getCurrentPosition() - 30) {
+        while (5 < Math.abs(Elevatorleftmotor.getCurrentPosition() - 30)) {
             Elevatorleftmotor.setPower(gotopos(30, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(30, Elevatorrightmotor.getCurrentPosition()));
         }
     }
 
     public void elevatordown() {
-        while (5 != Elevatorleftmotor.getCurrentPosition() - 0) {
+        while (5 < Math.abs(Elevatorleftmotor.getCurrentPosition() - 0)) {
             Elevatorleftmotor.setPower(gotopos(0, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(0, Elevatorrightmotor.getCurrentPosition()));
         }
