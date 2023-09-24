@@ -34,7 +34,7 @@ public class Skelly extends LinearOpMode {
     protected void initHardware(boolean isAuto) {
         //Subsystem inti
         intake = new Intake(hardwareMap);
-        elevator = new Elevator(hardwareMap);
+        elevator = new Elevator(hardwareMap, 0, 0, 0);
         vision = new Vision(hardwareMap);
 
         intake.register();
