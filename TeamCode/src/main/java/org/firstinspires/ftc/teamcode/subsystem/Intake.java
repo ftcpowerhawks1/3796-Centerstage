@@ -13,8 +13,6 @@ public class Intake extends SubsystemBase {
     private ServoEx intakeHeightChanger;
     private int startingintakepos = 0;
 
-
-
     public Intake(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
@@ -50,11 +48,11 @@ public class Intake extends SubsystemBase {
         }
     }
 
-    public void intakehigh() {
+    public void intakeHigh() {
         intakeHeightChanger.turnToAngle(configVar.intakehighpos);
     }
 
-    public void intakelow() {
+    public void intakeLow() {
         intakeHeightChanger.turnToAngle(configVar.intakelowpos);
     }
 

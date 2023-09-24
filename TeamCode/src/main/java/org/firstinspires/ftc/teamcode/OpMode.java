@@ -2,36 +2,21 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 
-import android.util.Log;
-
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
-import com.arcrobotics.ftclib.util.Timing;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.Vision;
 
-import org.firstinspires.ftc.vision.VisionPortal;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
-import org.firstinspires.ftc.vision.tfod.TfodProcessor;
-
-import java.util.ArrayList;
-import java.util.List;
-
 @TeleOp(name = "TeleOp", group = "Pain (Basic)")
 public class OpMode extends configVar {
 
 
-    protected Intake intake;
-    protected Vision vision;
-    public List<String> labels = new ArrayList<>();
-    public VisionPortal visionPortal;
-    public AprilTagProcessor aprilTag;
-    public TfodProcessor tfod;
+    Intake intake;
+    Vision vision;
     public ToggleButtonReader intakeToggle = new ToggleButtonReader(secondaryGamePad, GamepadKeys.Button.A);
 
     @Override
@@ -42,23 +27,15 @@ public class OpMode extends configVar {
         initHardware(false);
 
         if (opModeIsActive()) {
-            int aprilTagLeftId = 1;
-            int aprilTagMiddleId = 2;
-            int aprilTagRightId = 3;
-
-            double aprilTagLeftCenterX = 0;
-            double aprilTagMiddleCenterX = 0;
-            double aprilTagRightCenterX = 0;
 
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_UP).whenPressed(intake::stop);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.LEFT_BUMPER).whenPressed(intake::intakelow);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intake::intakehigh);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.LEFT_BUMPER).whenPressed(intake::intakeLow);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intake::intakeHigh);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.X).whenPressed(elevator::elevatorRunToSet1);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.Y).whenPressed(elevator::elevatorRunToSet2);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.B).whenPressed(elevator::elevatorRunToSet3);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatordown);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreonboard);
-
 
 
             while (opModeIsActive()) {
@@ -91,24 +68,13 @@ public class OpMode extends configVar {
                 }
 
                 //April Tag Stuff
-                List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
-                if (!aprilTagDetections.isEmpty()){
-                    for (AprilTagDetection detection : aprilTagDetections) {
-                        if (detection.id == aprilTagLeftId){
-                            aprilTagLeftCenterX = detection.center.x;
-                        } else if (detection.id == aprilTagMiddleId) {
-                            aprilTagMiddleCenterX = detection.center.x;
-                        } else if (detection.id == aprilTagRightId) {
-                            aprilTagRightCenterX = detection.center.x;
-                        }
-                    }
-                }
+
 
                 telemetry.update();
                 sleep(20);
             }
         if (isStopRequested()) {
-            stoprobot();
+            stopRobot();
 
             stop();
         }

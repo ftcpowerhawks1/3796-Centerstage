@@ -2,6 +2,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -70,10 +71,10 @@ public class Skelly extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-
+        PhotonCore.enable();
     }
 
-    public void stoprobot() {
+    public void stopRobot() {
         intake.stop();
         elevator.stop();
 

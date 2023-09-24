@@ -10,7 +10,6 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.configVar;
 
-
 public class Elevator extends SubsystemBase {
     private final HardwareMap hardwareMap;
     private final DcMotorEx Elevatorleftmotor;
@@ -41,17 +40,14 @@ public class Elevator extends SubsystemBase {
 
 
     }
-
     @Override
     public void register() {
         super.register();
     }
-
     @Override
     public void periodic() {
 
     }
-
     public void elevatorRunToSet3() {
         indexpixel();
         while (!scored) {
@@ -85,7 +81,6 @@ public class Elevator extends SubsystemBase {
         }
         scored = false;
     }
-
     public void elevatordown() {
         clawtoindexpos();
         while (5 < Math.abs(Elevatorleftmotor.getCurrentPosition() - 0)) {
@@ -93,52 +88,39 @@ public class Elevator extends SubsystemBase {
             Elevatorrightmotor.setPower(gotopos(0, Elevatorrightmotor.getCurrentPosition()));
         }
     }
-
     public void stop() {
         Elevatorleftmotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         Elevatorrightmotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
 
         setPower(0.0);
     }
-
     public void setPower(double Power) {
         Elevatorleftmotor.setPower(Power);
         Elevatorrightmotor.setPower(Power);
     }
-
     /** Set claw ready to score the pixel **/
-
     public void clawtoscoringpos() {
         clawrotationchanger.turnToAngle(configVar.clawRotationScoringPos);
     }
-
     /** Set claw ready to pick up a pixel from the intake **/
-
     public void clawtoindexpos() {
         clawrotationchanger.turnToAngle(0);
         openclaw();
     }
-
     /** Open the claw **/
-
     public void openclaw() {
         clawservo.turnToAngle(120);
     }
-
     /** Close the claw **/
-
     public void indexpixel() {
         clawservo.turnToAngle(0);
     }
-
     /** Recheck we are in the right position and then score on the board. **/
-
     public void scoreonboard() {
         clawrotationchanger.turnToAngle(configVar.clawRotationScoringPos);
         openclaw();
         scored = true;
     }
-
     public double gotopos(double target, double state) {
         double output = controller.calculate(target, state);
         return output;
