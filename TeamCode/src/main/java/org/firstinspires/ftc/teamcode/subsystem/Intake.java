@@ -1,17 +1,16 @@
 package org.firstinspires.ftc.teamcode.subsystem;
 
-import static org.firstinspires.ftc.teamcode.configVar.intakereversed;
-
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
+import org.firstinspires.ftc.teamcode.configVar;
+
 public class Intake extends SubsystemBase {
     private HardwareMap hardwareMap;
     private DcMotorEx intakeMotor;
     private ServoEx intakeHeightChanger;
-    private int intakelowpos = 25;
     private int startingintakepos = 0;
 
 
@@ -36,7 +35,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void intake() {
-        if (intakereversed) {
+        if (configVar.intakereversed) {
             setPower(1.0);
         } else {
             setPower(-1.0);
@@ -44,7 +43,7 @@ public class Intake extends SubsystemBase {
     }
 
     public void outtake() {
-        if (intakereversed) {
+        if (configVar.intakereversed) {
             setPower(-1.0);
         } else {
             setPower(1.0);
@@ -52,16 +51,15 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakehigh() {
-        int intakehighpos = 25;
-        intakeHeightChanger.setPosition(intakehighpos);
+        intakeHeightChanger.turnToAngle(configVar.intakehighpos);
     }
 
     public void intakelow() {
-        intakeHeightChanger.setPosition(intakelowpos);
+        intakeHeightChanger.turnToAngle(configVar.intakelowpos);
     }
 
     public void overideIntakePos(int Pos) {
-        intakeHeightChanger.setPosition(Pos);
+        intakeHeightChanger.turnToAngle(Pos);
     }
 
 
