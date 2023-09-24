@@ -2,9 +2,13 @@ package org.firstinspires.ftc.teamcode;
 
 import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
 
+import android.util.Log;
+
 import com.arcrobotics.ftclib.command.button.GamepadButton;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
+import com.arcrobotics.ftclib.util.Timing;
+import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
@@ -20,6 +24,8 @@ import java.util.List;
 
 @TeleOp(name = "TeleOp", group = "Pain (Basic)")
 public class OpMode extends configVar {
+
+
     protected Intake intake;
     protected Vision vision;
     public List<String> labels = new ArrayList<>();
@@ -30,7 +36,7 @@ public class OpMode extends configVar {
 
     @Override
     public void runOpMode() {
-
+        PhotonCore.enable();
         waitForStart();
 
         initHardware(false);
@@ -51,7 +57,7 @@ public class OpMode extends configVar {
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.Y).whenPressed(elevator::elevatorRunToSet2);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.B).whenPressed(elevator::elevatorRunToSet3);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatordown);
-
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreonboard);
 
 
 
@@ -98,14 +104,11 @@ public class OpMode extends configVar {
                     }
                 }
 
-
-
                 telemetry.update();
                 sleep(20);
             }
         if (isStopRequested()) {
-            intake.stop();
-            elevator.stop();
+            stoprobot();
 
             stop();
         }

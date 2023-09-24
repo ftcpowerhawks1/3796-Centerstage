@@ -4,6 +4,7 @@ import static org.firstinspires.ftc.teamcode.configVar.intakereversed;
 
 import com.arcrobotics.ftclib.command.SubsystemBase;
 import com.arcrobotics.ftclib.hardware.ServoEx;
+import com.arcrobotics.ftclib.hardware.motors.MotorEx;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
@@ -66,6 +67,7 @@ public class Intake extends SubsystemBase {
 
 
     public void stop() {
+        intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
         setPower(0.0);
     }
 
