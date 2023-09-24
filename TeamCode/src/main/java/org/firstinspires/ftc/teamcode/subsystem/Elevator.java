@@ -9,14 +9,16 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 public class Elevator extends SubsystemBase {
-    private HardwareMap hardwareMap;
-    private DcMotorEx Elevatorleftmotor, Elevatorrightmotor;
+    private final HardwareMap hardwareMap;
+    private final DcMotorEx Elevatorleftmotor;
+    private final DcMotorEx Elevatorrightmotor;
 
-    private ServoEx clawrotationchanger, clawservo;
+    private final ServoEx clawrotationchanger;
+    private final ServoEx clawservo;
 
     public BasicPID controller;
 
-    private int clawrotationscoringpos = 60;
+    private final int clawRotationScoringPos = 60;
 
     public boolean scored = false;
 
@@ -54,7 +56,7 @@ public class Elevator extends SubsystemBase {
         while (!scored) {
             Elevatorleftmotor.setPower(gotopos(100, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(100, Elevatorrightmotor.getCurrentPosition()));
-            if (clawrotationchanger.getPosition() - clawrotationscoringpos > 2) {
+            if (clawrotationchanger.getPosition() - clawRotationScoringPos > 2) {
                 clawtoscoringpos();
             }
         }
@@ -65,7 +67,7 @@ public class Elevator extends SubsystemBase {
         while (!scored) {
             Elevatorleftmotor.setPower(gotopos(50, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(50, Elevatorrightmotor.getCurrentPosition()));
-            if (clawrotationchanger.getPosition() - clawrotationscoringpos > 2) {
+            if (clawrotationchanger.getPosition() - clawRotationScoringPos > 2) {
                 clawtoscoringpos();
             }
         }
@@ -76,7 +78,7 @@ public class Elevator extends SubsystemBase {
         while (!scored) {
             Elevatorleftmotor.setPower(gotopos(30, Elevatorleftmotor.getCurrentPosition()));
             Elevatorrightmotor.setPower(gotopos(30, Elevatorrightmotor.getCurrentPosition()));
-            if (clawrotationchanger.getPosition() - clawrotationscoringpos > 2) {
+            if (clawrotationchanger.getPosition() - clawRotationScoringPos > 2) {
                 clawtoscoringpos();
             }
         }
@@ -106,7 +108,7 @@ public class Elevator extends SubsystemBase {
     /** Set claw ready to score the pixel **/
 
     public void clawtoscoringpos() {
-        clawrotationchanger.setPosition(clawrotationscoringpos);
+        clawrotationchanger.setPosition(clawRotationScoringPos);
     }
 
     /** Set claw ready to pick up a pixel from the intake **/
@@ -131,7 +133,7 @@ public class Elevator extends SubsystemBase {
     /** Recheck we are in the right position and then score on the board. **/
 
     public void scoreonboard() {
-        clawrotationchanger.setPosition(clawrotationscoringpos);
+        clawrotationchanger.setPosition(clawRotationScoringPos);
         openclaw();
         scored = true;
     }
