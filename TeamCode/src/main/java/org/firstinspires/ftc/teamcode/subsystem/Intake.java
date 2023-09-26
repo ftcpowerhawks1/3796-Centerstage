@@ -8,10 +8,10 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.configVar;
 
 public class Intake extends SubsystemBase {
-    private HardwareMap hardwareMap;
-    private DcMotorEx intakeMotor;
-    private ServoEx intakeHeightChanger;
-    private int startingintakepos = 0;
+    private final HardwareMap hardwareMap;
+    private final DcMotorEx intakeMotor;
+    private final ServoEx intakeHeightChanger;
+    private final int startingintakepos = 0;
 
     public Intake(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;

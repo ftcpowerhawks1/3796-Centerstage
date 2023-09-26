@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class SubsystemTemplate extends SubsystemBase {
-    private HardwareMap hardwareMap;
+    private final HardwareMap hardwareMap;
     //define hardware here as private
     //private MotorEx test;
 

@@ -12,10 +12,6 @@ import java.util.List;
 public class Auto extends Skelly {
 
     /**
-     * The variable to store our instance of the AprilTag processor.
-     */
-
-    /**
      * The variable to store our instance of the vision portal.
      */
 
@@ -27,33 +23,15 @@ public class Auto extends Skelly {
     public void runOpMode() {
         PhotonCore.enable();
         initHardware(true);
-        vision.initVision();
+        vision.initVision(autopos);
+
+
 
         waitForStart();
 
         if (opModeIsActive()) {
-            while (opModeIsActive()) {
-                //April Tag
-                List<AprilTagDetection> aprilTagDetections = vision.aprilTag.getDetections();
-                if (!aprilTagDetections.isEmpty()){
-                    for (AprilTagDetection detection : aprilTagDetections) {
-                        if (detection.id == vision.leftId) {
-                            leftCenterX = detection.center.x;
-                        } else if (detection.id == vision.middleId) {
-                            middleCenterX = detection.center.x;
-                        } else if (detection.id == vision.rightId) {
-                            rightCenterX = detection.center.x;
-                        }
-                    }
-                }
+            automain(possibleAutoPos.REDRIGHT);
 
-                //Tensorflow
-                vision.telemetryAprilTag();
-                telemetry.update();
-
-                // Share the CPU.
-                sleep(20);
-            }
         }
 
         // Save more CPU resources when camera is no longer needed.
@@ -61,5 +39,17 @@ public class Auto extends Skelly {
 
     }   // end method runOpMode()
 
+    public void automain(possibleAutoPos pos) {
+        autopos = pos;
+        if (pos == possibleAutoPos.BLUELEFT) {
+            telemetry.addData(">", "Blue Left");
+        } else if (pos == possibleAutoPos.BLUERIGHT) {
+            telemetry.addData(">", "Blue Right");
+        } else if (pos == possibleAutoPos.REDLEFT) {
+            telemetry.addData(">", "Red Left");
+        } else if (pos == possibleAutoPos.REDRIGHT) {
+            telemetry.addData(">", "Red Right");
+        }
+    }
 
 }   // end class

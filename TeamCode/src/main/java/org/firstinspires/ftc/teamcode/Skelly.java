@@ -10,10 +10,21 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import org.firstinspires.ftc.teamcode.subsystem.Elevator;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.Vision;
+import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
+
+import java.util.List;
 
 @TeleOp
 @Disabled
 public class Skelly extends LinearOpMode {
+    //Auto Pos storage
+    public enum possibleAutoPos {
+        BLUELEFT,
+        BLUERIGHT,
+        REDLEFT,
+        REDRIGHT
+    }
+    possibleAutoPos autopos;
 
     //Drive Init
     public int DriverTolerance = 5;
@@ -32,8 +43,10 @@ public class Skelly extends LinearOpMode {
     protected Elevator elevator;
     protected Vision vision;
 
+
+
     protected void initHardware(boolean isAuto) {
-        //Subsystem inti
+        //Subsystem init
         intake = new Intake(hardwareMap);
         elevator = new Elevator(hardwareMap, 0, 0, 0);
         vision = new Vision(hardwareMap);
@@ -72,6 +85,18 @@ public class Skelly extends LinearOpMode {
     @Override
     public void runOpMode() {
         PhotonCore.enable();
+
+        while (opModeIsActive()) {
+            //April Tag
+
+
+            //Tensorflow
+            vision.telemetryAprilTag();
+            telemetry.update();
+
+            // Share the CPU.
+            sleep(20);
+        }
     }
 
     public void stopRobot() {
