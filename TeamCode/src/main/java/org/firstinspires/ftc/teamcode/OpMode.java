@@ -38,7 +38,7 @@ public class OpMode extends configVar {
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreonboard);
 
 
-            while (opModeIsActive()) {
+            while (opModeIsActive() && !isStopRequested()) {
 
                 /* Custom Mecaunum Drive Code */
                 double rx = primaryGamePad.getRightX();
