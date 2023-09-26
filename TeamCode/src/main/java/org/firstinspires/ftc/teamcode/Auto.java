@@ -3,10 +3,6 @@ package org.firstinspires.ftc.teamcode;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-
-import java.util.List;
-
 @Autonomous(name = "Auto", group = "Pain (Pre-Release)")
 
 public class Auto extends Skelly {
@@ -14,10 +10,6 @@ public class Auto extends Skelly {
     /**
      * The variable to store our instance of the vision portal.
      */
-
-    //Initialize Required Variables for AprilTag
-
-    double leftCenterX, middleCenterX, rightCenterX;
 
     @Override
     public void runOpMode() {
