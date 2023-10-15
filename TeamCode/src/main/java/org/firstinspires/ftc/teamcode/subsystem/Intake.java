@@ -8,10 +8,13 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import org.firstinspires.ftc.teamcode.configVar;
 
 public class Intake extends SubsystemBase {
-    private final DcMotorEx intakeMotor;
-    private final ServoEx intakeHeightChanger;
+    private HardwareMap hardwareMap;
+    private DcMotorEx intakeMotor;
+    private ServoEx intakeHeightChanger;
+    private int startingintakepos = 0;
 
     public Intake(HardwareMap hardwareMap) {
+        this.hardwareMap = hardwareMap;
 
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
         intakeHeightChanger = hardwareMap.get(ServoEx.class, "Intake Height Servo");
@@ -20,7 +23,6 @@ public class Intake extends SubsystemBase {
 
     @Override
     public void register() {
-        int startingintakepos = 0;
         intakeHeightChanger.setPosition(startingintakepos);
         super.register();
     }
@@ -47,11 +49,11 @@ public class Intake extends SubsystemBase {
     }
 
     public void intakeHigh() {
-        overideIntakePos(configVar.intakehighpos);
+        intakeHeightChanger.turnToAngle(configVar.intakehighpos);
     }
 
     public void intakeLow() {
-        overideIntakePos(configVar.intakelowpos);
+        intakeHeightChanger.turnToAngle(configVar.intakelowpos);
     }
 
     public void overideIntakePos(int Pos) {

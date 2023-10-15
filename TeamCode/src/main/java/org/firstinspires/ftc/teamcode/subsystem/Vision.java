@@ -14,8 +14,6 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
 import org.firstinspires.ftc.teamcode.configVar;
-import org.firstinspires.ftc.teamcode.Skelly.*;
-
 
 
 import java.util.ArrayList;
@@ -29,21 +27,17 @@ public class Vision extends SubsystemBase {
     public AprilTagProcessor aprilTag;
     public TfodProcessor tfod;
 
-    possibleAutoPos autoPos;
+    public int leftId = 1;
+    public int middleId = 2;
+    public int rightId = 3;
 
-    public int blueLeftID = 1;
-    public int blueMiddleID = 2;
-    public int blueRightID = 3;
-
-    public int redLeftID = 1;
-    public int redMiddleID = 2;
-    public int redRightID = 3;
+    public int aprilTagLeftId = 1;
+    public int aprilTagMiddleId = 2;
+    public int aprilTagRightId = 3;
 
     public double aprilTagLeftCenterX = 0;
     public double aprilTagMiddleCenterX = 0;
     public double aprilTagRightCenterX = 0;
-
-    private List<AprilTagDetection> aprilTagDetections;
 
     private double returnvalue;
 
@@ -64,11 +58,10 @@ public class Vision extends SubsystemBase {
 
     /**
      * Initialize AprilTag and Tensorflow.
-     */
+     * */
 
-    public void initVision(possibleAutoPos pos) {
+    public void initVision() {
 
-        autoPos = pos;
         labels.add("Cone");
         labels.add("No Cone");
 
@@ -171,30 +164,16 @@ public class Vision extends SubsystemBase {
      */
     public double alignleft() {
         List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
-        if (autoPos == possibleAutoPos.BLUELEFT || autoPos == possibleAutoPos.BLUERIGHT) {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == blueLeftID) {
-                        aprilTagLeftCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagLeftCenterX;
+        if (!aprilTagDetections.isEmpty()) {
+            for (AprilTagDetection detection : aprilTagDetections) {
+                if (detection.id == aprilTagLeftId) {
+                    aprilTagLeftCenterX = detection.center.x;
+                    returnvalue = configVar.cameraCenter - aprilTagLeftCenterX;
 
-                    }
                 }
-            } else {
-                returnvalue = 99999;
             }
         } else {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == redLeftID) {
-                        aprilTagLeftCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagLeftCenterX;
-
-                    }
-                }
-            } else {
-                returnvalue = 99999;
-            }
+            returnvalue = 99999;
         }
         return returnvalue;
     }
@@ -203,98 +182,38 @@ public class Vision extends SubsystemBase {
      * Return the double of the distance until the middle tag is centered.
      */
     public double alignmiddle() {
-        aprilTagDetections = aprilTag.getDetections();
-        if (autoPos == possibleAutoPos.BLUELEFT || autoPos == possibleAutoPos.BLUERIGHT) {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == blueMiddleID) {
-                        aprilTagMiddleCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagMiddleCenterX;
+        List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
+        if (!aprilTagDetections.isEmpty()) {
+            for (AprilTagDetection detection : aprilTagDetections) {
+                if (detection.id == aprilTagMiddleId) {
+                    aprilTagMiddleCenterX = detection.center.x;
+                    returnvalue = configVar.cameraCenter - aprilTagMiddleCenterX;
 
-                    }
                 }
-            } else {
-                returnvalue = 99999;
             }
         } else {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == redMiddleID) {
-                        aprilTagMiddleCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagMiddleCenterX;
-
-                    }
-                }
-            } else {
-                returnvalue = 99999;
-            }
+            returnvalue = 99999;
         }
         return returnvalue;
     }
-
 
     /**
      * Return the double of the distance until the right tag is centered.
      */
     public double alignright() {
-        if (autoPos == possibleAutoPos.BLUELEFT || autoPos == possibleAutoPos.BLUERIGHT) {
-            aprilTagDetections = aprilTag.getDetections();
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == blueRightID) {
-                        aprilTagRightCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagRightCenterX;
+        List<AprilTagDetection> aprilTagDetections = aprilTag.getDetections();
+        if (!aprilTagDetections.isEmpty()) {
+            for (AprilTagDetection detection : aprilTagDetections) {
+                if (detection.id == aprilTagRightId) {
+                    aprilTagRightCenterX = detection.center.x;
+                    returnvalue = configVar.cameraCenter - aprilTagRightCenterX;
 
-                    }
                 }
-            } else {
-                returnvalue = 99999;
             }
         } else {
-            aprilTagDetections = aprilTag.getDetections();
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == redRightID) {
-                        aprilTagRightCenterX = detection.center.x;
-                        returnvalue = configVar.cameraCenter - aprilTagRightCenterX;
-
-                    }
-                }
-            } else {
-                returnvalue = 99999;
-            }
+            returnvalue = 99999;
         }
         return returnvalue;
     }
 
-
-    public void getapriltagcenter() {
-        aprilTagDetections = aprilTag.getDetections();
-
-        if (autoPos == possibleAutoPos.BLUELEFT || autoPos == possibleAutoPos.BLUERIGHT) {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == blueLeftID) {
-                        aprilTagLeftCenterX = detection.center.x;
-                    } else if (detection.id == blueMiddleID) {
-                        aprilTagMiddleCenterX = detection.center.x;
-                    } else if (detection.id == blueRightID) {
-                        aprilTagRightCenterX = detection.center.x;
-                    }
-                }
-            }
-        } else {
-            if (!aprilTagDetections.isEmpty()) {
-                for (AprilTagDetection detection : aprilTagDetections) {
-                    if (detection.id == redLeftID) {
-                        aprilTagLeftCenterX = detection.center.x;
-                    } else if (detection.id == redMiddleID) {
-                        aprilTagMiddleCenterX = detection.center.x;
-                    } else if (detection.id == redRightID) {
-                        aprilTagRightCenterX = detection.center.x;
-                    }
-                }
-            }
-        }
-    }
 }

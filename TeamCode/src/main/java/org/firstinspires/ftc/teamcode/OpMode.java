@@ -1,30 +1,27 @@
 package org.firstinspires.ftc.teamcode;
 
+import static org.firstinspires.ftc.robotcore.external.navigation.AngleUnit.DEGREES;
+
 import com.arcrobotics.ftclib.command.button.GamepadButton;
-import com.arcrobotics.ftclib.drivebase.MecanumDrive;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.arcrobotics.ftclib.gamepad.ToggleButtonReader;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.Vision;
 
-@TeleOp(name = "Blue TeleOp", group = "Pain (Basic)")
-public class BlueOpMode extends configVar {
+
+
+@TeleOp(name = "TeleOp", group = "Pain (Basic)")
+public class OpMode extends configVar {
 
 
     Intake intake;
     Vision vision;
     public ToggleButtonReader intakeToggle = new ToggleButtonReader(secondaryGamePad, GamepadKeys.Button.A);
-    public MecanumDrive m_drive;
+
     @Override
     public void runOpMode() {
-        PhotonCore.enable();
-        m_drive = new MecanumDrive(leftFront, rightFront, leftBack, rightBack);
-        //TODO Finish OpMode and make a new version for red.
-        vision.initVision(possibleAutoPos.BLUELEFT);
-
         waitForStart();
 
         initHardware(false);
@@ -37,14 +34,13 @@ public class BlueOpMode extends configVar {
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.X).whenPressed(elevator::elevatorRunToSet1);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.Y).whenPressed(elevator::elevatorRunToSet2);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.B).whenPressed(elevator::elevatorRunToSet3);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatordown);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreonboard);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatorDown);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreOnBoard);
 
 
             while (opModeIsActive() && !isStopRequested()) {
-                m_drive.driveRobotCentric(primaryGamePad.getLeftX(), primaryGamePad.getLeftY(), primaryGamePad.getRightX());
 
-                /* Custom Mecaunum Drive Code
+                /* Custom Mecaunum Drive Code */
                 double rx = primaryGamePad.getRightX();
                 double x = primaryGamePad.getLeftX() * 1.1; // Counteract imperfect strafing
                 double y = primaryGamePad.getLeftY();
@@ -62,7 +58,6 @@ public class BlueOpMode extends configVar {
                     rightBack.setVelocity(backRightPower, DEGREES);
 
                 }
-                */
 
                 if (intakeToggle.stateJustChanged()) {
                     if (intakeToggle.getState()) {
@@ -73,6 +68,7 @@ public class BlueOpMode extends configVar {
                 }
 
                 //April Tag Stuff
+
 
                 telemetry.update();
                 sleep(20);

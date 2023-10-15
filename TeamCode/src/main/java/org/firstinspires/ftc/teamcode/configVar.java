@@ -13,6 +13,9 @@ public class configVar extends Skelly {
 
     //Elevator Items
     public static volatile int clawRotationScoringPos = 60;
+    public static volatile int elevatorSetThreePosition = 20;
+    public static volatile int elevatorSetTwoPosition = 20;
+    public static volatile int elevatorSetOnePosition = 20;
 
     //Vision Items
     public static int cameraCenter = 620;

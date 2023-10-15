@@ -39,7 +39,7 @@ public class DoubleVision extends Skelly {
         telemetry.addData(">", "Hope And Pray That it works");
 
         telemetry.update();
-        vision.initVision(possibleAutoPos.BLUELEFT);
+        vision.initVision();
 
         waitForStart();
 

@@ -2,29 +2,18 @@ package org.firstinspires.ftc.teamcode;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.hardware.motors.MotorEx;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.TouchSensor;
 
 import org.firstinspires.ftc.teamcode.subsystem.Elevator;
 import org.firstinspires.ftc.teamcode.subsystem.Intake;
 import org.firstinspires.ftc.teamcode.subsystem.Vision;
-import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
-
-import java.util.List;
 
 @TeleOp
 @Disabled
 public class Skelly extends LinearOpMode {
-    //Auto Pos storage
-    public enum possibleAutoPos {
-        BLUELEFT,
-        BLUERIGHT,
-        REDLEFT,
-        REDRIGHT
-    }
-    possibleAutoPos autopos;
 
     //Drive Init
     public int DriverTolerance = 5;
@@ -36,14 +25,13 @@ public class Skelly extends LinearOpMode {
     //Motors
     MotorEx leftFront, leftBack, rightFront, rightBack;
 
-    //Toggle Buttons
+    //Magnetic Limit Switch
+    TouchSensor touch;
 
     //Subsystem Init
     protected Intake intake;
     protected Elevator elevator;
     protected Vision vision;
-
-
 
     protected void initHardware(boolean isAuto) {
         //Subsystem init
@@ -54,6 +42,9 @@ public class Skelly extends LinearOpMode {
         intake.register();
         elevator.register();
         vision.register();
+
+        //Sensor Init
+        touch = hardwareMap.get(TouchSensor.class, "Limit");
 
         //Motor Init
         leftFront = hardwareMap.get(MotorEx.class, "Left Front");
@@ -84,19 +75,6 @@ public class Skelly extends LinearOpMode {
 
     @Override
     public void runOpMode() {
-        PhotonCore.enable();
-
-        while (opModeIsActive()) {
-            //April Tag
-
-
-            //Tensorflow
-            vision.telemetryAprilTag();
-            telemetry.update();
-
-            // Share the CPU.
-            sleep(20);
-        }
     }
 
     public void stopRobot() {
