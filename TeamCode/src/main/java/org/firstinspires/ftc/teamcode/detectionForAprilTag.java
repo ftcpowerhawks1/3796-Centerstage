@@ -14,7 +14,7 @@ import java.util.List;
 
 @TeleOp(name = "Concept: AprilTag", group = "Pain (Beta)")
 
-public class ConceptAprilTag extends LinearOpMode {
+public class detectionForAprilTag extends LinearOpMode {
     /**
      * The variable to store our instance of the AprilTag processor.
      */

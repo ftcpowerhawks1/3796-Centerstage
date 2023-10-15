@@ -29,13 +29,11 @@ public class OpMode extends configVar {
         if (opModeIsActive()) {
 
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_UP).whenPressed(intake::stop);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.LEFT_BUMPER).whenPressed(intake::intakeLow);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(intake::intakeHigh);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.X).whenPressed(elevator::elevatorRunToSet1);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.Y).whenPressed(elevator::elevatorRunToSet2);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.B).whenPressed(elevator::elevatorRunToSet3);
             new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_DOWN).whenPressed(elevator::elevatorDown);
-            new GamepadButton(secondaryGamePad, GamepadKeys.Button.DPAD_RIGHT).whenPressed(elevator::scoreOnBoard);
+            new GamepadButton(secondaryGamePad, GamepadKeys.Button.RIGHT_BUMPER).whenPressed(elevator::scoreOnBoard);
 
 
             while (opModeIsActive() && !isStopRequested()) {

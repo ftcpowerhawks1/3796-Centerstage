@@ -8,14 +8,13 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 
 @TeleOp(name = "TeleOp sensor test", group = "Pain (Basic)")
 public class SensorTest extends configVar {
-    private DigitalChannel greenLED;
     TouchSensor touch;
 
 
     @Override
     public void runOpMode() {
         // Get the LED colors and touch sensor from the hardwaremap
-        greenLED = hardwareMap.get(DigitalChannel.class, "green");
+        DigitalChannel greenLED = hardwareMap.get(DigitalChannel.class, "green");
 
 
         // Wait for the play button to be pressed

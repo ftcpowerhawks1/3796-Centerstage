@@ -10,20 +10,16 @@ import org.firstinspires.ftc.teamcode.configVar;
 public class Intake extends SubsystemBase {
     private HardwareMap hardwareMap;
     private DcMotorEx intakeMotor;
-    private ServoEx intakeHeightChanger;
-    private int startingintakepos = 0;
 
     public Intake(HardwareMap hardwareMap) {
         this.hardwareMap = hardwareMap;
 
         intakeMotor = hardwareMap.get(DcMotorEx.class, "intakeMotor");
-        intakeHeightChanger = hardwareMap.get(ServoEx.class, "Intake Height Servo");
 
     }
 
     @Override
     public void register() {
-        intakeHeightChanger.setPosition(startingintakepos);
         super.register();
     }
 
@@ -47,19 +43,6 @@ public class Intake extends SubsystemBase {
             setPower(1.0);
         }
     }
-
-    public void intakeHigh() {
-        intakeHeightChanger.turnToAngle(configVar.intakehighpos);
-    }
-
-    public void intakeLow() {
-        intakeHeightChanger.turnToAngle(configVar.intakelowpos);
-    }
-
-    public void overideIntakePos(int Pos) {
-        intakeHeightChanger.turnToAngle(Pos);
-    }
-
 
     public void stop() {
         intakeMotor.setZeroPowerBehavior(DcMotorEx.ZeroPowerBehavior.FLOAT);
