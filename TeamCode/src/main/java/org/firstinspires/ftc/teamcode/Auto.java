@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import com.arcrobotics.ftclib.util.Timing;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 
 import org.firstinspires.ftc.vision.apriltag.AprilTagDetection;
@@ -21,7 +22,7 @@ public class Auto extends Skelly {
     //Initialize Required Variables for AprilTag
 
     double leftCenterX, middleCenterX, rightCenterX;
-
+    Timing.Timer timer;
     @Override
     public void runOpMode() {
         initHardware(true);

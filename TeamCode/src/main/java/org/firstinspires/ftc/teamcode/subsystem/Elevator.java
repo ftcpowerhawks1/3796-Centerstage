@@ -31,8 +31,8 @@ public class Elevator extends SubsystemBase {
         elevatorLeftMotor = hardwareMap.get(DcMotorEx.class, "Left Elevator");
         elevatorRightMotor = hardwareMap.get(DcMotorEx.class, "Right Elevator");
 
-        elevatorLeftMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        elevatorRightMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        elevatorLeftMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
+        elevatorRightMotor.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
 
         clawRotationChanger = hardwareMap.get(ServoEx.class, "Claw Spin Servo");
         clawServo = hardwareMap.get(ServoEx.class, "Claw Servo");
