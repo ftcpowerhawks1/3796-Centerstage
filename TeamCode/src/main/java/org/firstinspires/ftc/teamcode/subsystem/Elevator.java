@@ -12,6 +12,7 @@ import com.qualcomm.robotcore.hardware.TouchSensor;
 import org.firstinspires.ftc.teamcode.configVar;
 
 public class Elevator extends SubsystemBase {
+    //Still Testing
     private final HardwareMap hardwareMap;
     private final DcMotorEx elevatorLeftMotor;
     private final DcMotorEx elevatorRightMotor;
